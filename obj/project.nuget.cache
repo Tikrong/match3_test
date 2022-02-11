@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "R26fZbow51tj8Vgvm8Yln8m2j2Nn/FPX3QeqWZP2DbVx4eN44NODBfiGo7DC13/MK3CUmN3fPI/0rOVXXHsjSA==",
+  "success": true,
+  "projectFilePath": "D:\\GameDev\\monogame\\Match3\\Match3\\Match3.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tikro\\.nuget\\packages\\monogame.content.builder.task\\3.8.0.1641\\monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
+    "C:\\Users\\tikro\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
+  ],
+  "logs": []
+}

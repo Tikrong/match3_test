@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/blue.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/green.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/grey.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/orange.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/pink.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/scoreFont.spritefont</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/spritesheet.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/stars.jpg</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/walkAnim.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File>explosion.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
