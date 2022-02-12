@@ -1,84 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Match3
+namespace Match3Test
 {
     class Board
     {
-        Cell[,] boardArray;
         private Random random;
+        private Dictionary<MarbleColor, Texture2D> textures = new Dictionary<MarbleColor, Texture2D>();
+        private SpriteBatch spriteBatch;
 
-        private int cellSize = 140;
+        
+        public Cell[,] cells;
 
-        private Cell selectedCell;
-
-        public Board(Game1 game)
+        public Board(Dictionary<MarbleColor, Texture2D> textures, SpriteBatch spriteBatch)
         {
-            boardArray = new Cell[8, 8];
             random = new Random();
-            for (int y = 0; y < 8; y++)
-            {
-                for (int x = 0; x < 8; x++)
-                {
-                    boardArray[y,x] = new Cell((Type)random.Next(0, 5), game, new Vector2(x * cellSize, y * cellSize));
-                }
-            }
+            this.textures = textures;
+            this.spriteBatch = spriteBatch;
+            cells = new Cell[8, 8];
+            this.GenerateBoard();
         }
 
-        public void DrawBoard(SpriteBatch spriteBatch)
+        public void GenerateBoard()
         {
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    boardArray[y,x].DrawCell(spriteBatch, new Vector2(x * cellSize, y * cellSize));
+                    MarbleColor color = (MarbleColor)random.Next(0, 5);
+                    Cell cell = new Cell(spriteBatch, color, y, x, textures[color]);
+                    cells[y, x] = cell;
                 }
             }
         }
 
-        public void MouseClick(MouseState state)
+        public void Draw()
         {
-            int y = state.Y / this.cellSize;
-            int x = state.X / this.cellSize;
-
-            if (selectedCell == null)
+            for (int y = 0; y < 8; y++)
             {
-                selectedCell = boardArray[y, x];
-                selectedCell.state = Cell.State.Selected;
+                for (int x = 0; x < 8; x++)
+                {
+                    cells[y, x].Draw();
+                }
             }
-            else
-            {
-                //selectedCell.state = Cell.State.Normal;
-                //selectedCell = boardArray[y, x];
-                //selectedCell.state = Cell.State.Selected;
-
-                //Vector2 destination = new Vector2(x * cellSize, y * cellSize);
-                //selectedCell.destination = destination;
-                //selectedCell.state = Cell.State.Moving;
-                Cell newCell = boardArray[y, x];
-                boardArray[y, x] = boardArray[(int)selectedCell.position.Y / cellSize, (int)selectedCell.position.X / cellSize];
-                boardArray[(int)selectedCell.position.Y / cellSize, (int)selectedCell.position.X / cellSize] = newCell;
-                SwapCells(selectedCell, newCell);
-
-
-
-                selectedCell = null;
-            }
-
-         
         }
 
-        public void SwapCells(Cell cell1, Cell cell2)
-        {
-            cell1.destination = cell2.position;
-            cell2.destination = cell1.position;
-            cell1.state = Cell.State.Moving;
-            cell2.state = Cell.State.Moving;
-        }
+
+
 
     }
 }

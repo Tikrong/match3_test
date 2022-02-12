@@ -25,7 +25,7 @@ namespace Match3
         private int score = 0;
 
         // animations
-        private AnimatedSprite explosion;
+        public AnimatedSprite explosion;
         private RotatingSprite rotatingMarble;
 
 
@@ -45,8 +45,8 @@ namespace Match3
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _graphics.PreferredBackBufferHeight = 1120;
-            _graphics.PreferredBackBufferWidth = 1120;
+            _graphics.PreferredBackBufferHeight = 512;
+            _graphics.PreferredBackBufferWidth = 512;
             _graphics.ApplyChanges();
 
             base.Initialize();
@@ -67,7 +67,7 @@ namespace Match3
             scoreFont = Content.Load<SpriteFont>("scoreFont");
 
             Texture2D texture = Content.Load<Texture2D>("explosion");
-            explosion = new AnimatedSprite(texture, 8, 10);
+            explosion = new AnimatedSprite(texture, 2, 4);
 
             rotatingMarble = new RotatingSprite(marbleGrey);
 
@@ -129,7 +129,7 @@ namespace Match3
             _spriteBatch.DrawString(scoreFont, "Score: " + score, new Vector2(350, 100), Color.White);
             //testCell.DrawCell(_spriteBatch, new Vector2(0, 0));
             _spriteBatch.End();
-            explosion.Draw(_spriteBatch, new Vector2(200, 200));
+            //explosion.Draw(_spriteBatch, new Vector2(200, 200));
 
             //rotatingMarble.Draw(_spriteBatch, new Vector2(200, 200));
 
