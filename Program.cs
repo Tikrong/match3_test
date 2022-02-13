@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Match3Test
+namespace Match3
 {
     public static class Program
     {
         [STAThread]
         static void Main()
         {
-            using (var game = new MainGame())
+            using (var game = new Game1())
                 game.Run();
         }
     }
