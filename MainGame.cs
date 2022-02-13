@@ -55,6 +55,8 @@ namespace Match3Test
                 board = new Board(textures, spriteBatch);
             }
 
+            board.Update();
+
             base.Update(gameTime);
         }
 

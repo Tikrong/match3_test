@@ -57,7 +57,8 @@ namespace Match3Test
                 mouseY = currentMouseState.Y / Constants.cellSize;
                 mouseX = currentMouseState.X / Constants.cellSize;
 
-
+                // WORKING HERE
+                
 
             }
             lastMouseState = currentMouseState;
@@ -65,6 +66,7 @@ namespace Match3Test
             return false;
         }
 
+        // Draws each cell
         public void Draw()
         {
             for (int y = 0; y < 8; y++)
@@ -72,6 +74,19 @@ namespace Match3Test
                 for (int x = 0; x < 8; x++)
                 {
                     cells[y, x].Draw();
+                }
+            }
+        }
+
+        // Updates each cell
+        public void Update()
+        {
+            
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    cells[y, x].Update();
                 }
             }
         }

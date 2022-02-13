@@ -13,6 +13,7 @@ namespace Match3Test
         private SpriteBatch spriteBatch;
         private Texture2D texture;
         private CellState state;
+        private float rotationAngle = 0f;
 
         public int Row { get; set; }
         public int Column { get; set; }
@@ -43,7 +44,7 @@ namespace Match3Test
                     // do later
                     break;
                 case CellState.Selected:
-                    // do later
+                    rotationAngle += 0.1f;
                     break;
                         
             }
@@ -53,7 +54,19 @@ namespace Match3Test
 
         public void Draw()
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            switch(state)
+            {
+                case CellState.Selected:
+                    Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+                    Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+                    // Here you should change the hardcoded 32,32
+                    spriteBatch.Draw(texture, position + new Vector2(32, 32), sourceRectangle, Color.White, rotationAngle, origin, 1.0f, SpriteEffects.None, 1);
+                    break;
+                default:
+                    spriteBatch.Draw(texture, position, Color.White);
+                    break;
+            }
+            
         }
 
 
