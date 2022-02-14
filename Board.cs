@@ -12,6 +12,7 @@ namespace Match3Test
         private Random random;
         private Dictionary<MarbleColor, Texture2D> textures = new Dictionary<MarbleColor, Texture2D>();
         private SpriteBatch spriteBatch;
+        private Cell selectedCell;
 
         
         public Cell[,] cells;
@@ -58,12 +59,55 @@ namespace Match3Test
                 mouseX = currentMouseState.X / Constants.cellSize;
 
                 // WORKING HERE
+                // 1. if no cell is selected - select cell
+                if (selectedCell == null)
+                {
+                    selectedCell = cells[mouseY, mouseX];
+                    selectedCell.SelectCell();
+                    lastMouseState = currentMouseState;
+                    return false;
+                }
+                // 2. if cell is selected, check whether new cell is valid option for swap (is neighbour)
+                Cell candidateCell = cells[mouseY, mouseX];
+                
+                if (selectedCell.isNeigbour(candidateCell))
+                {
+                    // 3. if valid option for swap, return true
+                    selectedCell.UnselectCell();
+                    SwapCells(selectedCell, candidateCell);
+                    selectedCell = null;
+                    lastMouseState = currentMouseState;
+                    return true;
+                }
+                // 4. if not a valid option for swap, select other cell and return false
+                else
+                {
+                    selectedCell.UnselectCell();
+                    selectedCell = candidateCell;
+                    selectedCell.SelectCell();
+                    lastMouseState = currentMouseState;
+                    return false;
+                }
+                
                 
 
             }
             lastMouseState = currentMouseState;
 
             return false;
+        }
+
+        // places cell1 into position of cell2 in the array and moves them on places of each other
+        public void SwapCells(Cell cell1, Cell cell2)
+        {
+            // change the position of cells in the array
+            cells[cell1.Row, cell1.Column] = cell2;
+            cells[cell2.Row, cell2.Column] = cell1;
+
+            // Move cell to new position
+            Point tmpCell2Pos = new Point(cell2.Row, cell2.Column);
+            cell2.MoveTo(cell1.Row, cell1.Column);
+            cell1.MoveTo(tmpCell2Pos.X, tmpCell2Pos.Y);
         }
 
         // Draws each cell

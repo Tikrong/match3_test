@@ -15,7 +15,7 @@ namespace Match3Test
         public Dictionary<MarbleColor, Texture2D> textures = new Dictionary<MarbleColor, Texture2D>();
 
         // Change later
-        private Board board;
+        private Gameplay gameplay;
 
         public MainGame()
         {
@@ -50,12 +50,12 @@ namespace Match3Test
 
         protected override void Update(GameTime gameTime)
         {
-            if (board == null)
+            if (gameplay == null)
             {
-                board = new Board(textures, spriteBatch);
+                gameplay = new Gameplay(spriteBatch, textures);
             }
 
-            board.Update();
+            gameplay.Update();
 
             base.Update(gameTime);
         }
@@ -65,7 +65,7 @@ namespace Match3Test
             GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            board.Draw();
+            gameplay.Draw();
             spriteBatch.End();
             base.Draw(gameTime);
         }
