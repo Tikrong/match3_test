@@ -22,6 +22,9 @@ namespace Match3Test
         private MouseState lastMouseState;
         private MouseState currentMouseState;
 
+        private Cell wasSpapped1;
+        private Cell wasSpapped2;
+
         public Board(Dictionary<Textures, Texture2D> textures, SpriteBatch spriteBatch)
         {
             random = new Random();
@@ -56,6 +59,7 @@ namespace Match3Test
             // if mouse was clicked
             if (currentMouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
             {
+                
                 // get the coordinates of call that was clilcked in the array of cells
                 mouseY = currentMouseState.Y / Constants.cellSize;
                 mouseX = currentMouseState.X / Constants.cellSize;
@@ -102,6 +106,10 @@ namespace Match3Test
         // places cell1 into position of cell2 in the array and moves them on places of each other
         public void SwapCells(Cell cell1, Cell cell2)
         {
+            // remember the cells that were swapped
+            wasSpapped1 = cell1;
+            wasSpapped2 = cell2;
+
             // change the position of cells in the array
             cells[cell1.Row, cell1.Column] = cell2;
             cells[cell2.Row, cell2.Column] = cell1;
@@ -110,6 +118,25 @@ namespace Match3Test
             Point tmpCell2Pos = new Point(cell2.Row, cell2.Column);
             cell2.MoveTo(cell1.Row, cell1.Column);
             cell1.MoveTo(tmpCell2Pos.X, tmpCell2Pos.Y);
+
+        }
+
+        // this method is called after unsuccessfull swap to return cells to their positions
+        public void SwapCellsBack()
+        {
+            Cell cell1 = wasSpapped1;
+            Cell cell2 = wasSpapped2;
+            // change the position of cells in the array
+            cells[cell1.Row, cell1.Column] = cell2;
+            cells[cell2.Row, cell2.Column] = cell1;
+
+            // Move cell to new position
+            Point tmpCell2Pos = new Point(cell2.Row, cell2.Column);
+            cell2.MoveTo(cell1.Row, cell1.Column);
+            cell1.MoveTo(tmpCell2Pos.X, tmpCell2Pos.Y);
+
+            wasSpapped1 = null;
+            wasSpapped2 = null;
         }
 
         // Draws each cell
@@ -119,7 +146,11 @@ namespace Match3Test
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    cells[y, x].Draw();
+                    if (cells[y,x] != null)
+                    {
+                        cells[y, x].Draw();
+                    }
+                    
                 }
             }
         }
@@ -132,6 +163,10 @@ namespace Match3Test
             {
                 for (int x = 0; x < 8; x++)
                 {
+                    if (cells[y,x] == null)
+                    {
+                        continue;
+                    }
                     if (cells[y, x].Update())
                     {
                         isAnimating = true;
@@ -211,6 +246,12 @@ namespace Match3Test
                 }
             }
 
+            // if no mathec return false
+            if (lines.Count == 0)
+            {
+                return false;
+            }
+
             // check that it's working
             // Destroy matches
             foreach (List<Cell> line in lines)
@@ -220,6 +261,8 @@ namespace Match3Test
                     cell.Destroy();
                 }
             }
+            // when there are matches return true
+            return true;
 
             // Find intersections
             // Generate bonuses
@@ -235,28 +278,87 @@ namespace Match3Test
             {
                 for (int y = 7; y > 0; y--)
                 {
+                    if (cells[y, x] == null)
+                    {
+                        // if cell is empty find closest cell in the top and drop it to this empty cell
+                        for (int i = y - 1; i >= 0; i--)
+                        {
+                            if (cells[i, x] == null)
+                            {
+                                continue;
+                            }
+
+                            // if next cell on the top go higher
+                            if (cells[i, x].isEmpty())
+                            {
+                                continue;
+                            }
+                            cells[i, x].DropTo(y);
+                            //Cell tmpCell = cells[y, x];
+                            cells[y, x] = cells[i, x];
+                            cells[i, x] = null;
+                            break;
+
+                        }
+                    }
                     // if cell with marble continue loop
-                    if (!cells[y,x].isEmpty())
+                    else if (!cells[y, x].isEmpty())
                     {
                         continue;
                     }
 
-                    // if cell is empty find closest cell in the top and drop it to this empty cell
-                    for (int i = y-1; i >= 0; i--)
+                    else
                     {
-                        // if next cell on the top go higher
-                        if (!cells[i,x].isEmpty())
+                        // if cell is empty find closest cell in the top and drop it to this empty cell
+                        for (int i = y - 1; i >= 0; i--)
                         {
-                            continue;
-                        }
-                        cells[i, x].DropTo(cells[y, x].Row);
-                        cells[y, x] = cells[i, x];
+                            if (cells[i, x] == null)
+                            {
+                                continue;
+                            }
 
+                            // if next cell on the top go higher
+                            if (cells[i, x].isEmpty())
+                            {
+                                continue;
+                            }
+                            cells[i, x].DropTo(y);
+                            //Cell tmpCell = cells[y, x];
+                            cells[y, x] = cells[i, x];
+                            cells[i, x] = null;
+                            break;
+
+                        }
                     }
 
                 }
             }
             return false;
+        }
+
+        // iterate over every cell in the array and spawn marbles when the cells are empty
+        public void SpawnMarbles()
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (cells[y,x] == null)
+                    {
+                        MarbleColor color = (MarbleColor)random.Next(0, 5);
+                        Cell cell = new Cell(spriteBatch, color, y, x, textures[(Textures)color], textures[Textures.Explosion]);
+                        cells[y, x] = cell;
+                        continue;
+                    }
+                    if (cells[y,x].isEmpty())
+                    {
+                        MarbleColor color = (MarbleColor)random.Next(0, 5);
+                        Cell cell = new Cell(spriteBatch, color, y, x, textures[(Textures)color], textures[Textures.Explosion]);
+                        cells[y, x] = cell;
+                        
+                    }
+                }
+            }
         }
 
 

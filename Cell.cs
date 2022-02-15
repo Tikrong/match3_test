@@ -13,11 +13,13 @@ namespace Match3Test
         private Vector2 destination;
         private Vector2 movementVector;
         private AnimatedSprite explosion;
+        private float movementSpeed;
 
         private SpriteBatch spriteBatch;
         private Texture2D texture;
         private CellState state;
         private float rotationAngle = 0f;
+        private float opacity = 0.01f;
 
         public int Row { get; set; }
         public int Column { get; set; }
@@ -33,7 +35,8 @@ namespace Match3Test
             this.texture = texture;
             this.explosion = new AnimatedSprite(explosion, 2, 4);
             position = new Vector2(column * Constants.cellSize, row * Constants.cellSize);
-            state = CellState.Neutral;
+            movementSpeed = 5f;
+            state = CellState.FadeIn;
         }
 
         // returns true if animation is running and false if animation is not running
@@ -61,6 +64,16 @@ namespace Match3Test
                     break;
                 case CellState.Empty:
                     return false;
+                case CellState.FadeIn:
+                    opacity += 0.02f;
+                    if (opacity >= 1f)
+                    {
+                        state = CellState.Neutral;
+                        break;
+                    }
+                    break;
+
+
 
 
             }
@@ -86,6 +99,10 @@ namespace Match3Test
                     explosion.Draw(spriteBatch, position);
                     break;
                 case CellState.Empty:
+                    break;
+                case CellState.FadeIn:
+                    spriteBatch.Draw(texture, position, Color.White * opacity);
+                    if (opacity >= 1) { opacity = 0f; }
                     break;
                 default:
                     spriteBatch.Draw(texture, position, Color.White);
@@ -146,7 +163,7 @@ namespace Match3Test
                 // Move right
                 if (movementVector.X > 0)
                 {
-                    position = new Vector2(position.X + 0.5f, position.Y);
+                    position = new Vector2(position.X + movementSpeed, position.Y);
                     // if destination reached
                     if (position.X >= destination.X)
                     {
@@ -158,7 +175,7 @@ namespace Match3Test
                 // Move left
                 else if (movementVector.X < 0)
                 {
-                    position = new Vector2(position.X - 0.5f, position.Y);
+                    position = new Vector2(position.X - movementSpeed, position.Y);
                     // if destination reached
                     if (position.X <= destination.X)
                     {
@@ -175,7 +192,7 @@ namespace Match3Test
                 // move up
                 if (movementVector.Y < 0)
                 {
-                    position = new Vector2(position.X, position.Y - 0.5f);
+                    position = new Vector2(position.X, position.Y - movementSpeed);
                     // if destination reached
                     if (position.Y <= destination.Y)
                     {
@@ -188,7 +205,7 @@ namespace Match3Test
                 // move down
                 else if (movementVector.Y > 0)
                 {
-                    position = new Vector2(position.X, position.Y + 0.5f);
+                    position = new Vector2(position.X, position.Y + movementSpeed);
                     // if destination reached
                     if (position.Y >= destination.Y)
                     {
@@ -221,6 +238,8 @@ namespace Match3Test
             state = CellState.Exploding;
 
         }
+
+
 
        
 

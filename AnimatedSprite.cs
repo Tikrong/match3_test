@@ -26,7 +26,7 @@ namespace Match3Test
         public bool Update()
         {
             currentFrame++;
-            if (currentFrame == totalFrames * 10)
+            if (currentFrame == totalFrames * 3)
             {
                 currentFrame = 0;
                 return true;
@@ -38,8 +38,8 @@ namespace Match3Test
         {
             int width = Texture.Width / Columns;
             int height = Texture.Height / Rows;
-            int row = (currentFrame / 10) / Columns;
-            int column = (currentFrame / 10) % Columns;
+            int row = (currentFrame / 3) / Columns;
+            int column = (currentFrame / 3) % Columns;
 
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, 64, 64);

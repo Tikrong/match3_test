@@ -10,7 +10,8 @@ namespace Match3Test
         Selected,
         Moving,
         Exploding,
-        Empty
+        Empty,
+        FadeIn
 
     }
 }

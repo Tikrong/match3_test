@@ -14,6 +14,7 @@ namespace Match3Test
         private Board board;
         private SpriteBatch spriteBatch;
         Dictionary<Textures, Texture2D> textures;
+        private GameState state;
 
 
         public Gameplay(SpriteBatch spriteBatch, Dictionary<Textures, Texture2D> textures)
@@ -21,7 +22,7 @@ namespace Match3Test
             this.spriteBatch = spriteBatch;
             this.textures = textures;
             board = new Board(this.textures, this.spriteBatch);
-            board.FindMatches();
+            state = GameState.CheckLines;
             
         }
 
@@ -29,7 +30,45 @@ namespace Match3Test
         {
             if (!board.isAnimating)
             {
-                board.UserInput();
+                switch(state)
+                {
+                    case GameState.Input:
+                        if (board.UserInput())
+                        {
+                            state = GameState.CheckAfterSwap;
+                            break;
+                        }
+                        break;
+                    case GameState.CheckAfterSwap:
+                        if (board.FindMatches())
+                        {
+                            state = GameState.DropCells;
+                            break;
+                        }
+                        board.SwapCellsBack();
+                        state = GameState.Input;
+                        break;
+                    case GameState.CheckLines:
+                        
+                        if (board.FindMatches())
+                        {
+                            state = GameState.DropCells;
+                            break;
+                        }
+                        state = GameState.Input;
+                
+                        break;
+                    case GameState.DropCells:
+                        board.DropMarbles();
+                        state = GameState.SpawnCells;
+                        break;
+                    case GameState.SpawnCells:
+                        board.SpawnMarbles();
+                        state = GameState.CheckLines;
+                        break;
+
+                }
+                
             }
             board.Update();
             
