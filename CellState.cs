@@ -8,7 +8,9 @@ namespace Match3Test
     {
         Neutral,
         Selected,
-        Moving
+        Moving,
+        Exploding,
+        Empty
 
     }
 }

@@ -13,20 +13,25 @@ namespace Match3Test
     {
         private Board board;
         private SpriteBatch spriteBatch;
-        Dictionary<MarbleColor, Texture2D> textures;
+        Dictionary<Textures, Texture2D> textures;
 
 
-        public Gameplay(SpriteBatch spriteBatch, Dictionary<MarbleColor, Texture2D> textures)
+        public Gameplay(SpriteBatch spriteBatch, Dictionary<Textures, Texture2D> textures)
         {
             this.spriteBatch = spriteBatch;
             this.textures = textures;
             board = new Board(this.textures, this.spriteBatch);
+            board.FindMatches();
         }
 
         public void Update()
         {
+            if (!board.isAnimating)
+            {
+                board.UserInput();
+            }
             board.Update();
-            board.UserInput();
+            
         }
 
         public void Draw()

@@ -10,23 +10,25 @@ namespace Match3Test
     class Board
     {
         private Random random;
-        private Dictionary<MarbleColor, Texture2D> textures = new Dictionary<MarbleColor, Texture2D>();
+        private Dictionary<Textures, Texture2D> textures = new Dictionary<Textures, Texture2D>();
         private SpriteBatch spriteBatch;
         private Cell selectedCell;
 
         
         public Cell[,] cells;
+        public bool isAnimating;
 
         // It maybe transferred to controll class later
         private MouseState lastMouseState;
         private MouseState currentMouseState;
 
-        public Board(Dictionary<MarbleColor, Texture2D> textures, SpriteBatch spriteBatch)
+        public Board(Dictionary<Textures, Texture2D> textures, SpriteBatch spriteBatch)
         {
             random = new Random();
             this.textures = textures;
             this.spriteBatch = spriteBatch;
             cells = new Cell[8, 8];
+            isAnimating = false;
             this.GenerateBoard();
         }
 
@@ -38,7 +40,7 @@ namespace Match3Test
                 for (int x = 0; x < 8; x++)
                 {
                     MarbleColor color = (MarbleColor)random.Next(0, 5);
-                    Cell cell = new Cell(spriteBatch, color, y, x, textures[color]);
+                    Cell cell = new Cell(spriteBatch, color, y, x, textures[(Textures)color], textures[Textures.Explosion]);
                     cells[y, x] = cell;
                 }
             }
@@ -125,14 +127,73 @@ namespace Match3Test
         // Updates each cell
         public void Update()
         {
-            
+            isAnimating = false;
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    cells[y, x].Update();
+                    if (cells[y, x].Update())
+                    {
+                        isAnimating = true;
+                    }
                 }
             }
+        }
+
+        public bool FindMatches()
+        {
+            List<List<Cell>> lines = new List<List<Cell>>();
+            // Find Horizontal lines
+            for (int y = 0; y < 8; y++)
+            {
+                
+                List<Cell> line = new List<Cell>();
+                for (int x = 1; x < 8; x++)
+                {
+                    if (cells[y,x].MarbleColor == cells[y,x-1].MarbleColor)
+                    {
+                        line.Add(cells[y, x - 1]);
+                        if (x == 7)
+                        {
+                            line.Add(cells[y, x]);
+                            if (line.Count >= 3)
+                            {
+                                lines.Add(line);
+                                
+                            }
+                        }
+                        
+                    }
+                    else
+                    {
+                        line.Add(cells[y, x - 1]);
+                        if (line.Count >= 3)
+                        {
+                            lines.Add(line);
+                            
+                        }
+                        line = new List<Cell>();
+                    }
+                }
+            }
+
+        // check that it's working
+        foreach (List<Cell> line in lines)
+            {
+                foreach (Cell cell in line)
+                {
+                    cell.SelectCell();
+                }
+            }
+
+            
+
+            // Find Vertical lines
+            // Find intersections
+            // Generate bonuses
+            // Destroy lines
+
+            return false;
         }
 
 

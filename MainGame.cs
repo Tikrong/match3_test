@@ -12,7 +12,7 @@ namespace Match3Test
         private SpriteBatch spriteBatch;
 
         // content
-        public Dictionary<MarbleColor, Texture2D> textures = new Dictionary<MarbleColor, Texture2D>();
+        public Dictionary<Textures, Texture2D> textures = new Dictionary<Textures, Texture2D>();
 
         // Change later
         private Gameplay gameplay;
@@ -39,11 +39,13 @@ namespace Match3Test
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // load textures for marbles into a dictionary
-            textures[MarbleColor.Red] = Content.Load<Texture2D>("pink");
-            textures[MarbleColor.Green] = Content.Load<Texture2D>("green");
-            textures[MarbleColor.Blue] = Content.Load<Texture2D>("blue");
-            textures[MarbleColor.Grey] = Content.Load<Texture2D>("grey");
-            textures[MarbleColor.Orange] = Content.Load<Texture2D>("orange");
+            textures[Textures.Pink] = Content.Load<Texture2D>("pink");
+            textures[Textures.Green] = Content.Load<Texture2D>("green");
+            textures[Textures.Blue] = Content.Load<Texture2D>("blue");
+            textures[Textures.Grey] = Content.Load<Texture2D>("grey");
+            textures[Textures.Orange] = Content.Load<Texture2D>("orange");
+            textures[Textures.Explosion] = Content.Load<Texture2D>("explosion");
+
 
 
         }

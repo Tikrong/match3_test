@@ -12,6 +12,7 @@ namespace Match3Test
         private Vector2 position;
         private Vector2 destination;
         private Vector2 movementVector;
+        private AnimatedSprite explosion;
 
         private SpriteBatch spriteBatch;
         private Texture2D texture;
@@ -23,13 +24,14 @@ namespace Match3Test
 
         public MarbleColor MarbleColor { get; set; }
 
-        public Cell(SpriteBatch spriteBatch, MarbleColor color, int row, int column, Texture2D texture)
+        public Cell(SpriteBatch spriteBatch, MarbleColor color, int row, int column, Texture2D texture, Texture2D explosion)
         {
             this.spriteBatch = spriteBatch;
             MarbleColor = color;
             Row = row;
             Column = column;
             this.texture = texture;
+            this.explosion = new AnimatedSprite(explosion, 2, 4);
             position = new Vector2(column * Constants.cellSize, row * Constants.cellSize);
             state = CellState.Neutral;
         }
@@ -45,10 +47,19 @@ namespace Match3Test
             {
                 case CellState.Selected:
                     rotationAngle += 0.1f;
-                    break;
+                    return false;
+                    //break;
                 case CellState.Moving:
                     MoveToAnimation();
                     break;
+                case CellState.Exploding:
+                    if (explosion.Update())
+                    {
+                        state = CellState.Empty;
+                    }
+                    break;
+                case CellState.Empty:
+                    return false;
 
 
             }
@@ -68,6 +79,12 @@ namespace Match3Test
                     break;
                 case CellState.Moving:
                     spriteBatch.Draw(texture, position, Color.White);
+                    break;
+                case CellState.Exploding:
+                    // play explosion animation
+                    explosion.Draw(spriteBatch, position);
+                    break;
+                case CellState.Empty:
                     break;
                 default:
                     spriteBatch.Draw(texture, position, Color.White);
@@ -123,24 +140,24 @@ namespace Match3Test
                 // Move right
                 if (movementVector.X > 0)
                 {
-                    position = new Vector2(position.X + 5, position.Y);
+                    position = new Vector2(position.X + 0.5f, position.Y);
                     // if destination reached
                     if (position.X >= destination.X)
                     {
                         position.X = destination.X;
-                        state = CellState.Neutral;
+                        state = CellState.Exploding;
                         return;
                     }
                 }
                 // Move left
                 else if (movementVector.X < 0)
                 {
-                    position = new Vector2(position.X - 5, position.Y);
+                    position = new Vector2(position.X - 0.5f, position.Y);
                     // if destination reached
                     if (position.X <= destination.X)
                     {
                         position.X = destination.X;
-                        state = CellState.Neutral;
+                        state = CellState.Exploding;
                         return;
                     }
                 }
@@ -152,12 +169,12 @@ namespace Match3Test
                 // move up
                 if (movementVector.Y < 0)
                 {
-                    position = new Vector2(position.X, position.Y - 5);
+                    position = new Vector2(position.X, position.Y - 0.5f);
                     // if destination reached
                     if (position.Y <= destination.Y)
                     {
                         position.Y = destination.Y;
-                        state = CellState.Neutral;
+                        state = CellState.Exploding;
                         return;
                     }
                 }
@@ -165,18 +182,27 @@ namespace Match3Test
                 // move down
                 else if (movementVector.Y > 0)
                 {
-                    position = new Vector2(position.X, position.Y + 5);
+                    position = new Vector2(position.X, position.Y + 0.5f);
                     // if destination reached
                     if (position.Y >= destination.Y)
                     {
                         position.Y = destination.Y;
-                        state = CellState.Neutral;
+                        state = CellState.Exploding;
                         return;
                     }
                 }
             }
 
         }
+
+        public void Destroy()
+        {
+            // change state for destruction
+            state = CellState.Exploding;
+
+        }
+
+       
 
 
 
