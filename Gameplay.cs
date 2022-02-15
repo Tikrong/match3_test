@@ -22,6 +22,7 @@ namespace Match3Test
             this.textures = textures;
             board = new Board(this.textures, this.spriteBatch);
             board.FindMatches();
+            
         }
 
         public void Update()
@@ -32,6 +33,7 @@ namespace Match3Test
             }
             board.Update();
             
+
         }
 
         public void Draw()

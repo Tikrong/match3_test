@@ -56,6 +56,7 @@ namespace Match3Test
                     if (explosion.Update())
                     {
                         state = CellState.Empty;
+                        MarbleColor = MarbleColor.Empty;
                     }
                     break;
                 case CellState.Empty:
@@ -116,6 +117,11 @@ namespace Match3Test
             return false;
         }
 
+        public bool isEmpty()
+        {
+            return state == CellState.Empty;
+        }
+
         // moving the cell to new given position
         public bool MoveTo(int destinationRow, int destinationColumn)
         {
@@ -145,7 +151,7 @@ namespace Match3Test
                     if (position.X >= destination.X)
                     {
                         position.X = destination.X;
-                        state = CellState.Exploding;
+                        state = CellState.Neutral;
                         return;
                     }
                 }
@@ -157,7 +163,7 @@ namespace Match3Test
                     if (position.X <= destination.X)
                     {
                         position.X = destination.X;
-                        state = CellState.Exploding;
+                        state = CellState.Neutral;
                         return;
                     }
                 }
@@ -174,7 +180,7 @@ namespace Match3Test
                     if (position.Y <= destination.Y)
                     {
                         position.Y = destination.Y;
-                        state = CellState.Exploding;
+                        state = CellState.Neutral;
                         return;
                     }
                 }
@@ -187,11 +193,25 @@ namespace Match3Test
                     if (position.Y >= destination.Y)
                     {
                         position.Y = destination.Y;
-                        state = CellState.Exploding;
+                        state = CellState.Neutral;
                         return;
                     }
                 }
             }
+
+        }
+
+        // drops the cell into given location
+        public void DropTo(int row)
+        {
+            //1. calculate and save destination for movement
+            destination = new Vector2(Column * Constants.cellSize, row * Constants.cellSize);
+            //2. calculate movement vector
+            movementVector = new Vector2(0, row - Row);
+            //3. change state for movement
+            state = CellState.Moving;
+            //4. change data about row and column
+            Row = row;
 
         }
 

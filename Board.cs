@@ -176,25 +176,90 @@ namespace Match3Test
                     }
                 }
             }
-
-        // check that it's working
-        foreach (List<Cell> line in lines)
+            
+            // Find vertical lines
+            for (int x = 0; x < 8; x++)
             {
-                foreach (Cell cell in line)
+
+                List<Cell> line = new List<Cell>();
+                for (int y = 1; y < 8; y++)
                 {
-                    cell.SelectCell();
+                    if (cells[y, x].MarbleColor == cells[y - 1, x].MarbleColor)
+                    {
+                        line.Add(cells[y - 1, x]);
+                        if (y == 7)
+                        {
+                            line.Add(cells[y, x]);
+                            if (line.Count >= 3)
+                            {
+                                lines.Add(line);
+
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        line.Add(cells[y - 1, x]);
+                        if (line.Count >= 3)
+                        {
+                            lines.Add(line);
+
+                        }
+                        line = new List<Cell>();
+                    }
                 }
             }
 
-            
+            // check that it's working
+            // Destroy matches
+            foreach (List<Cell> line in lines)
+            {
+                foreach (Cell cell in line)
+                {
+                    cell.Destroy();
+                }
+            }
 
-            // Find Vertical lines
             // Find intersections
             // Generate bonuses
             // Destroy lines
 
             return false;
         }
+
+        // Iterates through the board, finds empty spaces and drops the marbles from above to that places
+        public bool DropMarbles()
+        {
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 7; y > 0; y--)
+                {
+                    // if cell with marble continue loop
+                    if (!cells[y,x].isEmpty())
+                    {
+                        continue;
+                    }
+
+                    // if cell is empty find closest cell in the top and drop it to this empty cell
+                    for (int i = y-1; i >= 0; i--)
+                    {
+                        // if next cell on the top go higher
+                        if (!cells[i,x].isEmpty())
+                        {
+                            continue;
+                        }
+                        cells[i, x].DropTo(cells[y, x].Row);
+                        cells[y, x] = cells[i, x];
+
+                    }
+
+                }
+            }
+            return false;
+        }
+
+
 
 
 

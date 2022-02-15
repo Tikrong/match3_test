@@ -4,15 +4,15 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/blue.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/explosion.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/green.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/grey.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/orange.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/pink.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/scoreFont.spritefont</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/stars.jpg</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/walkAnim.png</File>
+    <File>F:/gamedev/match3_test/Content/blue.png</File>
+    <File>F:/gamedev/match3_test/Content/explosion.png</File>
+    <File>F:/gamedev/match3_test/Content/green.png</File>
+    <File>F:/gamedev/match3_test/Content/grey.png</File>
+    <File>F:/gamedev/match3_test/Content/orange.png</File>
+    <File>F:/gamedev/match3_test/Content/pink.png</File>
+    <File>F:/gamedev/match3_test/Content/scoreFont.spritefont</File>
+    <File>F:/gamedev/match3_test/Content/stars.jpg</File>
+    <File>F:/gamedev/match3_test/Content/walkAnim.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
