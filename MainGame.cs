@@ -13,6 +13,7 @@ namespace Match3Test
 
         // content
         public Dictionary<Textures, Texture2D> textures = new Dictionary<Textures, Texture2D>();
+        private SpriteFont scoreFont;
 
         // Change later
         private Gameplay gameplay;
@@ -45,6 +46,12 @@ namespace Match3Test
             textures[Textures.Grey] = Content.Load<Texture2D>("grey");
             textures[Textures.Orange] = Content.Load<Texture2D>("orange");
             textures[Textures.Explosion] = Content.Load<Texture2D>("explosion");
+            textures[Textures.Bomb] = Content.Load<Texture2D>("bomb");
+            textures[Textures.LineHor] = Content.Load<Texture2D>("line_hor");
+            textures[Textures.LineVer] = Content.Load<Texture2D>("line_ver");
+            textures[Textures.Fireball] = Content.Load<Texture2D>("destroyer");
+
+            scoreFont = Content.Load<SpriteFont>("scoreFont");
 
 
 
@@ -54,10 +61,10 @@ namespace Match3Test
         {
             if (gameplay == null)
             {
-                gameplay = new Gameplay(spriteBatch, textures);
+                gameplay = new Gameplay(spriteBatch, textures, scoreFont);
             }
 
-            gameplay.Update();
+            gameplay.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -67,7 +74,7 @@ namespace Match3Test
             GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            gameplay.Draw();
+            gameplay.Draw(gameTime);
             spriteBatch.End();
             base.Draw(gameTime);
         }

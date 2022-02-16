@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Match3Test
 {
-    class Cell
+    class Cell: IEquatable<Cell>
     {
         private Vector2 position;
         private Vector2 destination;
@@ -17,16 +17,18 @@ namespace Match3Test
 
         private SpriteBatch spriteBatch;
         private Texture2D texture;
+        private Dictionary<Textures, Texture2D> textures;
         private CellState state;
         private float rotationAngle = 0f;
         private float opacity = 0.01f;
 
         public int Row { get; set; }
         public int Column { get; set; }
+        public Bonus bonus { get; set; }
 
         public MarbleColor MarbleColor { get; set; }
 
-        public Cell(SpriteBatch spriteBatch, MarbleColor color, int row, int column, Texture2D texture, Texture2D explosion)
+        public Cell(SpriteBatch spriteBatch, MarbleColor color, int row, int column, Texture2D texture, Texture2D explosion, Dictionary<Textures, Texture2D> textures)
         {
             this.spriteBatch = spriteBatch;
             MarbleColor = color;
@@ -37,6 +39,8 @@ namespace Match3Test
             position = new Vector2(column * Constants.cellSize, row * Constants.cellSize);
             movementSpeed = 5f;
             state = CellState.FadeIn;
+            bonus = Bonus.None;
+            this.textures = textures;
         }
 
         // returns true if animation is running and false if animation is not running
@@ -73,9 +77,6 @@ namespace Match3Test
                     }
                     break;
 
-
-
-
             }
             return true;
 
@@ -90,9 +91,11 @@ namespace Match3Test
                     Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
                     // Here you should change the hardcoded 32,32
                     spriteBatch.Draw(texture, position + new Vector2(32, 32), sourceRectangle, Color.White, rotationAngle, origin, 1.0f, SpriteEffects.None, 1);
+                    DrawBonus();
                     break;
                 case CellState.Moving:
                     spriteBatch.Draw(texture, position, Color.White);
+                    DrawBonus();
                     break;
                 case CellState.Exploding:
                     // play explosion animation
@@ -106,9 +109,30 @@ namespace Match3Test
                     break;
                 default:
                     spriteBatch.Draw(texture, position, Color.White);
+                    DrawBonus();
                     break;
             }
             
+        }
+
+        private void DrawBonus()
+        {
+            switch(bonus)
+            {
+                case (Bonus.None):
+                    break;
+                case (Bonus.Bomb):
+                    spriteBatch.Draw(textures[Textures.Bomb], position, Color.White);
+                    break;
+                case (Bonus.LineHor):
+                    spriteBatch.Draw(textures[Textures.LineHor], position, Color.White);
+                    break;
+                case (Bonus.LineVer):
+                    spriteBatch.Draw(textures[Textures.LineVer], position, Color.White);
+                    break;
+
+
+            }
         }
 
         public void SelectCell()
@@ -239,9 +263,29 @@ namespace Match3Test
 
         }
 
+        public void PlaceBonus(Bonus bonus)
+        {
+            this.bonus = bonus;
+        }
+
+        // methods to compare cells
+        public bool Equals(Cell other)
+        {
+            if (other is null)
+                return false;
+
+            return Row == other.Row && Column == other.Column;
+        }
+
+        public override bool Equals(object obj) => Equals(obj as Cell);
+        public override int GetHashCode() => (Row, Column).GetHashCode();
 
 
-       
+
+
+
+
+
 
 
 

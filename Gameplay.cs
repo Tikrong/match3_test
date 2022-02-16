@@ -15,18 +15,22 @@ namespace Match3Test
         private SpriteBatch spriteBatch;
         Dictionary<Textures, Texture2D> textures;
         private GameState state;
+        private Score score;
+        
 
 
-        public Gameplay(SpriteBatch spriteBatch, Dictionary<Textures, Texture2D> textures)
+        public Gameplay(SpriteBatch spriteBatch, Dictionary<Textures, Texture2D> textures, SpriteFont font)
         {
             this.spriteBatch = spriteBatch;
             this.textures = textures;
+ 
             board = new Board(this.textures, this.spriteBatch);
             state = GameState.CheckLines;
+            score = new Score(spriteBatch, font);
             
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             if (!board.isAnimating)
             {
@@ -71,13 +75,16 @@ namespace Match3Test
                 
             }
             board.Update();
+            board.UpdateDestroyers(gameTime);
             
 
         }
 
-        public void Draw()
+        public void Draw(GameTime gameTime)
         {
             board.Draw();
+            board.DrawDestroyers();
+            score.Draw(gameTime);
         }
 
 

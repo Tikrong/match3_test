@@ -68,3 +68,7 @@ F:\gamedev\match3_test\obj\Debug\netcoreapp3.1\Match3.csproj.CopyComplete
 F:\gamedev\match3_test\obj\Debug\netcoreapp3.1\Match3.dll
 F:\gamedev\match3_test\obj\Debug\netcoreapp3.1\Match3.pdb
 F:\gamedev\match3_test\obj\Debug\netcoreapp3.1\Match3.genruntimeconfig.cache
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\bomb.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\destroyer.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\line_hor.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\line_ver.xnb

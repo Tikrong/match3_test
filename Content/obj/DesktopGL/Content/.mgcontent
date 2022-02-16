@@ -5,9 +5,13 @@
   <Config />
   <SourceFiles>
     <File>D:/GameDev/monogame/Match3/Match3/Content/blue.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/bomb.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/destroyer.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/explosion.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/green.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/grey.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/line_hor.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/line_ver.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/orange.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/pink.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/scoreFont.spritefont</File>
@@ -15,6 +19,10 @@
     <File>D:/GameDev/monogame/Match3/Match3/Content/walkAnim.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

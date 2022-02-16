@@ -11,6 +11,11 @@ namespace Match3Test
         Blue,
         Grey,
         Orange,
-        Explosion
+        Explosion,
+        Bomb,
+        LineVer,
+        LineHor,
+        Fireball
+
     }
 }
