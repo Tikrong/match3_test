@@ -47,7 +47,7 @@ namespace Match3Test
                 for (int x = 0; x < 8; x++)
                 {
                     MarbleColor color = (MarbleColor)random.Next(0, 5);
-                    Cell cell = new Cell(spriteBatch, color, y, x, textures[(Textures)color], textures[Textures.Explosion], textures);
+                    Cell cell = new Cell(spriteBatch, color, y, x, textures);
                     cells[y, x] = cell;
                 }
             }
@@ -371,7 +371,7 @@ namespace Match3Test
                     if (cells[y, x].isEmpty())
                     {
                         MarbleColor color = (MarbleColor)random.Next(0, 5);
-                        Cell cell = new Cell(spriteBatch, color, y, x, textures[(Textures)color], textures[Textures.Explosion], textures);
+                        Cell cell = new Cell(spriteBatch, color, y, x, textures);
                         cells[y, x] = cell;
                     }
                 }
@@ -416,7 +416,7 @@ namespace Match3Test
                         case DestroyerType.Fireball:
                             //cells[destroyer.Row, destroyer.Column].Destroy();
                             addDestroyersHere.Add(cells[destroyer.Row, destroyer.Column]);
-                            
+
                             break;
                         case DestroyerType.Bomb:
                             foreach (Point point in destroyer.toDestroyByBomb)
@@ -430,9 +430,11 @@ namespace Match3Test
                 }
                 isAnimating = true;
             }
+
             // Remove all destroyers that reached destination
             destroyers.RemoveAll(destroyer => destroyer.IsFinished);
-            // Add new destroyers if needed (some callse were destroyed and they had bonus in them)
+
+            // Add new destroyers if needed (some cells were destroyed and they had bonus in them)
             foreach (Cell cell in addDestroyersHere)
             {
                 AddDestroyer(cell);

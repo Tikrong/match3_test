@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Match3Test
 {
+    // this class handles basic logic and animation of Marble and stores data about current marble
     class Cell: IEquatable<Cell>
     {
         private Vector2 position;
@@ -29,22 +30,22 @@ namespace Match3Test
 
         public MarbleColor MarbleColor { get; set; }
 
-        public Cell(SpriteBatch spriteBatch, MarbleColor color, int row, int column, Texture2D texture, Texture2D explosion, Dictionary<Textures, Texture2D> textures)
+        public Cell(SpriteBatch spriteBatch, MarbleColor color, int row, int column, Dictionary<Textures, Texture2D> textures)
         {
             this.spriteBatch = spriteBatch;
             MarbleColor = color;
             Row = row;
             Column = column;
-            this.texture = texture;
-            this.explosion = new AnimatedSprite(explosion, 2, 4);
             position = new Vector2(column * Constants.cellSize, row * Constants.cellSize);
             movementSpeed = Constants.MarbleMovementSpeed;
             state = CellState.FadeIn;
             bonus = Bonus.None;
             this.textures = textures;
+            texture = textures[(Textures)color];
+            explosion = new AnimatedSprite(textures[Textures.Explosion], 2, 4);
         }
 
-        // returns true if animation is running and false if animation is not running
+        // returns true if animation is running and false otherwise (rotation is not an animation here)
         public bool Update()
         {
             if (state == CellState.Neutral)
@@ -57,11 +58,11 @@ namespace Match3Test
                 case CellState.Selected:
                     rotationAngle += 0.1f;
                     return false;
-                    //break;
                 case CellState.Moving:
                     MoveToAnimation();
                     break;
                 case CellState.Exploding:
+                    // update returns true when animation of explosion is finished
                     if (explosion.Update())
                     {
                         state = CellState.Empty;
@@ -92,7 +93,7 @@ namespace Match3Test
                     Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
                     Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
                     // Here you should change the hardcoded 32,32
-                    spriteBatch.Draw(texture, position + new Vector2(32, 32), sourceRectangle, Color.White, rotationAngle, origin, 1.0f, SpriteEffects.None, 1);
+                    spriteBatch.Draw(texture, position + new Vector2(texture.Width/2, texture.Height/2), sourceRectangle, Color.White, rotationAngle, origin, 1.0f, SpriteEffects.None, 1);
                     DrawBonus();
                     break;
                 case CellState.Moving:
@@ -107,7 +108,7 @@ namespace Match3Test
                     break;
                 case CellState.FadeIn:
                     spriteBatch.Draw(texture, position, Color.White * opacity);
-                    if (opacity >= 1) { opacity = 0f; }
+                    if (opacity >= 1)  opacity = 1f; 
                     break;
                 default:
                     spriteBatch.Draw(texture, position, Color.White);
@@ -147,6 +148,7 @@ namespace Match3Test
             state = CellState.Neutral;
         }
 
+        // returns true if other cell is next to this cell horizontally or vertically
         public bool isNeigbour(Cell otherCell)
         {
             if (otherCell.Row == Row && Math.Abs(otherCell.Column - Column) == 1)
@@ -263,6 +265,7 @@ namespace Match3Test
 
         }
 
+        // destroys the cell and returns its score
         public int Destroy()
         {
             // change state for destruction
@@ -279,7 +282,7 @@ namespace Match3Test
             this.bonus = bonus;
         }
 
-        // methods to compare cells
+        // methods to compare cells to be able to use intersect on lists of cells
         public bool Equals(Cell other)
         {
             if (other is null)
