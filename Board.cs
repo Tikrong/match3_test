@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace Match3Test
 {
+    // this class handles the grid of marbles and implements function for core gameplay (swap, finding and destroying matches, dropping and creating marbles)
     class Board
     {
         private Random random;
@@ -15,18 +16,17 @@ namespace Match3Test
         private SpriteBatch spriteBatch;
         private Cell selectedCell;
 
+        private MouseState lastMouseState;
+        private MouseState currentMouseState;
+
+        // ued to store marbles that were swapped to unswap them, if no match or to create bonuses in their places if conditions are met
+        private Cell wasSpapped1;
+        private Cell wasSpapped2;
 
         public Cell[,] cells;
         public List<Destroyer> destroyers = new List<Destroyer>();
         public bool isAnimating;
         public int score { get; private set; }
-
-        // It maybe transferred to controll class later
-        private MouseState lastMouseState;
-        private MouseState currentMouseState;
-
-        private Cell wasSpapped1;
-        private Cell wasSpapped2;
 
         public Board(Dictionary<Textures, Texture2D> textures, SpriteBatch spriteBatch)
         {
@@ -72,7 +72,7 @@ namespace Match3Test
                 mouseY = currentMouseState.Y / Constants.cellSize;
                 mouseX = currentMouseState.X / Constants.cellSize;
 
-                // WORKING HERE
+                
                 // 1. if no cell is selected - select cell
                 if (selectedCell == null)
                 {
@@ -81,7 +81,7 @@ namespace Match3Test
                     lastMouseState = currentMouseState;
                     return false;
                 }
-                // 2. if cell is selected, check whether new cell is valid option for swap (is neighbour)
+                // 2. if cell is already selected, check whether new cell is a valid option for swap (is neighbour)
                 Cell candidateCell = cells[mouseY, mouseX];
 
                 if (selectedCell.isNeigbour(candidateCell))
@@ -132,19 +132,11 @@ namespace Match3Test
         // this method is called after unsuccessfull swap to return cells to their positions
         public void SwapCellsBack()
         {
-            Cell cell1 = wasSpapped1;
-            Cell cell2 = wasSpapped2;
-            // change the position of cells in the array
-            cells[cell1.Row, cell1.Column] = cell2;
-            cells[cell2.Row, cell2.Column] = cell1;
 
-            // Move cell to new position
-            Point tmpCell2Pos = new Point(cell2.Row, cell2.Column);
-            cell2.MoveTo(cell1.Row, cell1.Column);
-            cell1.MoveTo(tmpCell2Pos.X, tmpCell2Pos.Y);
-
+            SwapCells(wasSpapped1, wasSpapped2);
             wasSpapped1 = null;
             wasSpapped2 = null;
+
         }
 
         // Draws each cell
@@ -175,6 +167,7 @@ namespace Match3Test
                     {
                         continue;
                     }
+                    // Update method of cell returns true if animation is running
                     if (cells[y, x].Update())
                     {
                         isAnimating = true;

@@ -9,11 +9,11 @@ namespace Match3Test
 {
 
     // This class will handle gameplay screen and will manage the board states, UI, timer
-    class Gameplay
+    class Gameloop
     {
         private Board board;
         private SpriteBatch spriteBatch;
-        Dictionary<Textures, Texture2D> textures;
+        private Dictionary<Textures, Texture2D> textures;
         private GameState state;
         private Score score;
         private GameOver gameOver;
@@ -21,8 +21,8 @@ namespace Match3Test
         private MainGame game;
 
 
-
-        public Gameplay(SpriteBatch spriteBatch, Dictionary<Textures, Texture2D> textures, SpriteFont font, MainGame game)
+        // This class handles game screen and core gameplay
+        public Gameloop(SpriteBatch spriteBatch, Dictionary<Textures, Texture2D> textures, SpriteFont font, MainGame game)
         {
             this.spriteBatch = spriteBatch;
             this.textures = textures;
@@ -31,13 +31,14 @@ namespace Match3Test
             state = GameState.CheckLines;
             score = new Score(spriteBatch, font);
             gameOver = new GameOver(spriteBatch, font, textures);
-            timeLeft = 61f;
+            timeLeft = Constants.gameDuration;
             this.game = game;
             
         }
 
         public void Update(GameTime gameTime)
         {
+            // Game logic, switches state only if nothing is moving on the board
             if (!board.isAnimating)
             {
                 switch(state)
@@ -86,9 +87,12 @@ namespace Match3Test
                 }
                 
             }
+            
+            // updates elements on the board
             board.Update();
             board.UpdateDestroyers(gameTime);
-            // keep track of time
+            
+            // keep track of time left and changes state for gameover when time runs out
             timeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (timeLeft <= 1)
             {
@@ -99,6 +103,7 @@ namespace Match3Test
 
         }
 
+        // draws every element on the screen
         public void Draw(GameTime gameTime)
         {
             spriteBatch.Draw(textures[Textures.BackgroundPlay], new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight), Color.White);

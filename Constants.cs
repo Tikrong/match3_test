@@ -9,5 +9,6 @@ namespace Match3Test
         public const int screenWidth = 512;
         public const int screenHeight = 576;
         public const int cellSize = 64;
+        public const float gameDuration = 61f;
     }
 }

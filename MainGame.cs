@@ -14,11 +14,12 @@ namespace Match3Test
         // content
         public Dictionary<Textures, Texture2D> textures = new Dictionary<Textures, Texture2D>();
         private SpriteFont scoreFont;
-
-        // Change later
-        private Gameplay gameplay;
+        
+        // GameScreens
+        private Gameloop gameplay;
         private MainMenu mainMenu;
 
+        // GameState
         private GameState state;
 
         public MainGame()
@@ -30,7 +31,6 @@ namespace Match3Test
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             graphics.PreferredBackBufferHeight = Constants.screenHeight;
             graphics.PreferredBackBufferWidth = Constants.screenWidth;
             graphics.ApplyChanges();
@@ -42,7 +42,7 @@ namespace Match3Test
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // load textures for marbles into a dictionary
+            // load textures into a dictionary
             textures[Textures.Pink] = Content.Load<Texture2D>("pink");
             textures[Textures.Green] = Content.Load<Texture2D>("green");
             textures[Textures.Blue] = Content.Load<Texture2D>("blue");
@@ -61,7 +61,7 @@ namespace Match3Test
             textures[Textures.ButtonQuitHover] = Content.Load<Texture2D>("quitHover");
             textures[Textures.GameOver] = Content.Load<Texture2D>("gameOver");
 
-
+            // load gamefont
             scoreFont = Content.Load<SpriteFont>("scoreFont");
 
 
@@ -70,11 +70,13 @@ namespace Match3Test
 
         protected override void Update(GameTime gameTime)
         {
+            // during first update change state to run main Menu screen
             if (mainMenu == null)
             {
                 ChangeState(GameState.MainMenu);
             }
 
+            // depending on current state update one of the screens
             switch(state)
             {
                 case GameState.MainMenu:
@@ -85,7 +87,6 @@ namespace Match3Test
                     break;
             }
 
-
             base.Update(gameTime);
         }
 
@@ -93,6 +94,7 @@ namespace Match3Test
         {
             GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
 
+            // depending on the state draw current game screen
             spriteBatch.Begin();
             switch (state)
             {
@@ -107,6 +109,7 @@ namespace Match3Test
             base.Draw(gameTime);
         }
 
+        // used to change state of the game
         public void ChangeState(GameState newState)
         {
             switch(newState)
@@ -117,7 +120,7 @@ namespace Match3Test
                     break;
                 case GameState.GameLoop:
                     state = newState;
-                    gameplay = new Gameplay(spriteBatch, textures, scoreFont, this);
+                    gameplay = new Gameloop(spriteBatch, textures, scoreFont, this);
                     break;
             }
         }

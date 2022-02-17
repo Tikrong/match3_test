@@ -7,13 +7,14 @@ using System.Text;
 
 namespace Match3Test
 {
+
+    // This class renders main menu and switches Game State for game loop if button is clicked
     class MainMenu
     {
         private MouseState lastMouseState;
         private MouseState currentMouseState;
 
         private SpriteBatch spriteBatch;
-
 
         private Texture2D background;
         private Texture2D button;
