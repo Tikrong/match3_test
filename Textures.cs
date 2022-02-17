@@ -15,7 +15,14 @@ namespace Match3Test
         Bomb,
         LineVer,
         LineHor,
-        Fireball
+        Fireball,
+        BackgroundMain,
+        BackgroundPlay,
+        ButtonPlay,
+        ButtonPlayHover,
+        ButtonQuit,
+        ButtonQuitHover,
+        GameOver
 
     }
 }

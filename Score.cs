@@ -9,26 +9,20 @@ namespace Match3Test
 {
     class Score
     {
-        private int score;
         private SpriteBatch spriteBatch;
         private SpriteFont scoreFont;
-        private float timeLeft;
 
         public Score(SpriteBatch spriteBatch, SpriteFont scoreFont)
         {
             this.spriteBatch = spriteBatch;
             this.scoreFont = scoreFont;
-            score = 0;
-            timeLeft = 60f;
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime, int currentScore, int timeLeft)
         {
-            timeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            int timer = (int)timeLeft;
             Vector2 sizeOfText = scoreFont.MeasureString("SCORE: 999");
-            spriteBatch.DrawString(scoreFont, "SCORE: 999", new Vector2(10, 517), Color.White);
-            spriteBatch.DrawString(scoreFont, timer.ToString(), new Vector2(sizeOfText.X+30, 517), Color.White);
+            spriteBatch.DrawString(scoreFont, "SCORE: " + currentScore, new Vector2(10, 517), Color.White);
+            spriteBatch.DrawString(scoreFont, "TIME  " + timeLeft.ToString(), new Vector2(sizeOfText.X+70, 517), Color.White);
         }
     }
 }

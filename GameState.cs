@@ -11,6 +11,9 @@ namespace Match3Test
         CheckLines,
         DropCells,
         SpawnCells,
-        CheckAfterSwap
+        CheckAfterSwap,
+        GameOver,
+        MainMenu,
+        GameLoop
     }
 }

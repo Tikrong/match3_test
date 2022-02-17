@@ -17,6 +17,9 @@ namespace Match3Test
 
         // Change later
         private Gameplay gameplay;
+        private MainMenu mainMenu;
+
+        private GameState state;
 
         public MainGame()
         {
@@ -50,6 +53,14 @@ namespace Match3Test
             textures[Textures.LineHor] = Content.Load<Texture2D>("line_hor");
             textures[Textures.LineVer] = Content.Load<Texture2D>("line_ver");
             textures[Textures.Fireball] = Content.Load<Texture2D>("destroyer");
+            textures[Textures.BackgroundMain] = Content.Load<Texture2D>("background6");
+            textures[Textures.BackgroundPlay] = Content.Load<Texture2D>("background5");
+            textures[Textures.ButtonPlay] = Content.Load<Texture2D>("playNeutral");
+            textures[Textures.ButtonPlayHover] = Content.Load<Texture2D>("playHover");
+            textures[Textures.ButtonQuit] = Content.Load<Texture2D>("quitNormal");
+            textures[Textures.ButtonQuitHover] = Content.Load<Texture2D>("quitHover");
+            textures[Textures.GameOver] = Content.Load<Texture2D>("gameOver");
+
 
             scoreFont = Content.Load<SpriteFont>("scoreFont");
 
@@ -59,12 +70,21 @@ namespace Match3Test
 
         protected override void Update(GameTime gameTime)
         {
-            if (gameplay == null)
+            if (mainMenu == null)
             {
-                gameplay = new Gameplay(spriteBatch, textures, scoreFont);
+                ChangeState(GameState.MainMenu);
             }
 
-            gameplay.Update(gameTime);
+            switch(state)
+            {
+                case GameState.MainMenu:
+                    mainMenu.Update();
+                    break;
+                case GameState.GameLoop:
+                    gameplay.Update(gameTime);
+                    break;
+            }
+
 
             base.Update(gameTime);
         }
@@ -74,9 +94,32 @@ namespace Match3Test
             GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            gameplay.Draw(gameTime);
+            switch (state)
+            {
+                case GameState.MainMenu:
+                    mainMenu.Draw();
+                    break;
+                case GameState.GameLoop:
+                    gameplay.Draw(gameTime);
+                    break;
+            }
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public void ChangeState(GameState newState)
+        {
+            switch(newState)
+            {
+                case GameState.MainMenu:
+                    state = newState;
+                    mainMenu = new MainMenu(spriteBatch, textures, this);
+                    break;
+                case GameState.GameLoop:
+                    state = newState;
+                    gameplay = new Gameplay(spriteBatch, textures, scoreFont, this);
+                    break;
+            }
         }
 
     }

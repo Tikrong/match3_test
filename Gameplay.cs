@@ -16,10 +16,13 @@ namespace Match3Test
         Dictionary<Textures, Texture2D> textures;
         private GameState state;
         private Score score;
-        
+        private GameOver gameOver;
+        private float timeLeft;
+        private MainGame game;
 
 
-        public Gameplay(SpriteBatch spriteBatch, Dictionary<Textures, Texture2D> textures, SpriteFont font)
+
+        public Gameplay(SpriteBatch spriteBatch, Dictionary<Textures, Texture2D> textures, SpriteFont font, MainGame game)
         {
             this.spriteBatch = spriteBatch;
             this.textures = textures;
@@ -27,6 +30,9 @@ namespace Match3Test
             board = new Board(this.textures, this.spriteBatch);
             state = GameState.CheckLines;
             score = new Score(spriteBatch, font);
+            gameOver = new GameOver(spriteBatch, font, textures);
+            timeLeft = 61f;
+            this.game = game;
             
         }
 
@@ -70,21 +76,46 @@ namespace Match3Test
                         board.SpawnMarbles();
                         state = GameState.CheckLines;
                         break;
+                    case GameState.GameOver:
+                        if (gameOver.Update())
+                        {
+                            game.ChangeState(GameState.MainMenu);
+                        }
+                        break;
 
                 }
                 
             }
             board.Update();
             board.UpdateDestroyers(gameTime);
-            
+            // keep track of time
+            timeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeLeft <= 1)
+            {
+                state = GameState.GameOver;
+            }
+                
+
 
         }
 
         public void Draw(GameTime gameTime)
         {
-            board.Draw();
-            board.DrawDestroyers();
-            score.Draw(gameTime);
+            spriteBatch.Draw(textures[Textures.BackgroundPlay], new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight), Color.White);
+            switch (state)
+            {
+                case GameState.GameOver:
+                    gameOver.Draw(board.score);
+                    break;
+                default:
+                    
+                    board.Draw();
+                    board.DrawDestroyers();
+                    // draw score on the screen and time
+                    score.Draw(gameTime, board.score, (int)timeLeft);
+                    break;
+            }
+            
         }
 
 

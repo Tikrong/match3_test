@@ -36,7 +36,7 @@ namespace Match3Test
             texture = textures[Textures.Fireball];
             this.movementVector = new Vector2(destination.X - column, destination.Y - row);
             this.destination = new Vector2(destination.X * Constants.cellSize, destination.Y * Constants.cellSize);
-            movementSpeed = 10f;
+            movementSpeed = 20f;
             position = new Vector2(Column * Constants.cellSize, Row * Constants.cellSize);
             IsFinished = false;
             destroyerType = type;

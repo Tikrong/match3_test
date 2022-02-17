@@ -19,6 +19,7 @@ namespace Match3Test
         public Cell[,] cells;
         public List<Destroyer> destroyers = new List<Destroyer>();
         public bool isAnimating;
+        public int score { get; private set; }
 
         // It maybe transferred to controll class later
         private MouseState lastMouseState;
@@ -35,6 +36,7 @@ namespace Match3Test
             cells = new Cell[8, 8];
             isAnimating = false;
             this.GenerateBoard();
+            score = 0;
         }
 
         // Generates new board and fills it with random elements in each cell
@@ -293,54 +295,110 @@ namespace Match3Test
             {
                 foreach (Cell cell in line)
                 {
-                    cell.Destroy();
+                    AddDestroyer(cell);
+                    score += cell.Destroy();
                 }
                 // remove this lines from list of initial mathes not to check them again
                 lines.Remove(line);
             }
 
 
-            // Check for lines with 5 or more cells
-            foreach (List<Cell> line in lines)
-            {
-                if (line.Count() == 3)
-                {
-                    line[0].PlaceBonus(Bonus.Bomb);
-                    line.Remove(line[0]);
-
-                }
-            }
-
+            
             // Check for lines with 4 cells
             foreach (List<Cell> line in lines)
             {
                 if (line.Count() == 4)
                 {
+
                     // if horizontal line
                     if (line[0].Row == line[1].Row)
                     {
+                        if (line.Contains(wasSpapped1))
+                        {
+                            AddDestroyer(wasSpapped1);
+                            wasSpapped1.PlaceBonus(Bonus.LineHor);
+                            line.Remove(wasSpapped1);
+                            continue;
+                        }
+                        else if (line.Contains(wasSpapped2))
+                        {
+                            AddDestroyer(wasSpapped2);
+                            wasSpapped2.PlaceBonus(Bonus.LineHor);
+                            line.Remove(wasSpapped2);
+                            continue;
+                        }
+
+                        AddDestroyer(line[0]);
                         line[0].PlaceBonus(Bonus.LineHor);
                         line.Remove(line[0]);
                         continue;
                     }
+
+                    if (line.Contains(wasSpapped1))
+                    {
+                        AddDestroyer(wasSpapped1);
+                        wasSpapped1.PlaceBonus(Bonus.LineVer);
+                        line.Remove(wasSpapped1);
+                        continue;
+                    }
+                    else if (line.Contains(wasSpapped2))
+                    {
+                        AddDestroyer(wasSpapped2);
+                        wasSpapped2.PlaceBonus(Bonus.LineVer);
+                        line.Remove(wasSpapped2);
+                        continue;
+                    }
+                    AddDestroyer(line[0]);
                     line[0].PlaceBonus(Bonus.LineVer);
                     line.Remove(line[0]);
+                    
+
+                }
+            }
+            // Check for lines with 5 or more cells
+            foreach (List<Cell> line in lines)
+            {
+                if (line.Count() >= 5)
+                {
+                    // we check 
+                    if (line.Contains(wasSpapped1))
+                    {
+                        AddDestroyer(wasSpapped1);
+                        wasSpapped1.PlaceBonus(Bonus.Bomb);
+                        line.Remove(wasSpapped1);
+                        
+                        continue;
+                    }
+                    else if (line.Contains(wasSpapped2))
+                    {
+                        AddDestroyer(wasSpapped2);
+                        wasSpapped1.PlaceBonus(Bonus.Bomb);
+                        line.Remove(wasSpapped2);
+                        
+                        continue;
+                    }
+
+                    AddDestroyer(line[0]);
+                    line[0].PlaceBonus(Bonus.Bomb);
+                   
+                    line.Remove(line[0]);
+
 
                 }
             }
 
+            wasSpapped1 = null;
+            wasSpapped2 = null;
 
-            // check that it's working
+            
+
             // Destroy matches
             foreach (List<Cell> line in lines)
             {
                 foreach (Cell cell in line)
                 {
-                    // REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     AddDestroyer(cell);
-                    cell.Destroy();
-                    // REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    
+                    score += cell.Destroy();
                 }
             }
             // when there are matches return true
@@ -475,6 +533,7 @@ namespace Match3Test
 
         public void UpdateDestroyers(GameTime gameTime)
         {
+            List<Cell> addDestroyersHere = new List<Cell>();
             foreach (Destroyer destroyer in destroyers)
             {
                 // destroy cells as destroyer reaches new positions
@@ -483,12 +542,15 @@ namespace Match3Test
                     switch(destroyer.destroyerType)
                     {
                         case DestroyerType.Fireball:
-                            cells[destroyer.Row, destroyer.Column].Destroy();
+                            //cells[destroyer.Row, destroyer.Column].Destroy();
+                            addDestroyersHere.Add(cells[destroyer.Row, destroyer.Column]);
+                            
                             break;
                         case DestroyerType.Bomb:
                             foreach (Point point in destroyer.toDestroyByBomb)
                             {
-                                cells[point.Y, point.X].Destroy();
+                                //cells[point.Y, point.X].Destroy();
+                                addDestroyersHere.Add(cells[point.Y, point.X]);
                             }
                             break;
                     }
@@ -498,6 +560,12 @@ namespace Match3Test
             }
             // Remove all destroyers that reached destination
             destroyers.RemoveAll(destroyer => destroyer.IsFinished);
+            // Add new destroyers if needed (some callse were destroyed and they had bonus in them)
+            foreach (Cell cell in addDestroyersHere)
+            {
+                AddDestroyer(cell);
+                score += cell.Destroy();
+            }
         }
 
         public void DrawDestroyers()

@@ -21,6 +21,7 @@ namespace Match3Test
         private CellState state;
         private float rotationAngle = 0f;
         private float opacity = 0.01f;
+        private int scoreFromMarble = 1;
 
         public int Row { get; set; }
         public int Column { get; set; }
@@ -37,7 +38,7 @@ namespace Match3Test
             this.texture = texture;
             this.explosion = new AnimatedSprite(explosion, 2, 4);
             position = new Vector2(column * Constants.cellSize, row * Constants.cellSize);
-            movementSpeed = 5f;
+            movementSpeed = 10f;
             state = CellState.FadeIn;
             bonus = Bonus.None;
             this.textures = textures;
@@ -48,6 +49,7 @@ namespace Match3Test
         {
             if (state == CellState.Neutral)
             {
+                scoreFromMarble = 1;
                 return false;
             }
             switch(state)
@@ -69,7 +71,7 @@ namespace Match3Test
                 case CellState.Empty:
                     return false;
                 case CellState.FadeIn:
-                    opacity += 0.02f;
+                    opacity += 0.08f;
                     if (opacity >= 1f)
                     {
                         state = CellState.Neutral;
@@ -256,10 +258,14 @@ namespace Match3Test
 
         }
 
-        public void Destroy()
+        public int Destroy()
         {
             // change state for destruction
+            bonus = Bonus.None;
+            int score = scoreFromMarble;
+            scoreFromMarble = 0;
             state = CellState.Exploding;
+            return score;
 
         }
 
