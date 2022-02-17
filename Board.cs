@@ -232,10 +232,11 @@ namespace Match3Test
                 return false;
             }
 
-            // GENERATE BONUSES
-            // to store lines that should be destroyed after check
+            // Generate bonuses and destroy matches
+            
+            // list to store lines that should be destroyed after check
             List<List<Cell>> toDestroy = new List<List<Cell>>();
-            // Find intersections between lines
+            // Find intersections between matches
             foreach (List<Cell> line in lines)
             {
                 foreach (List<Cell> otherLine in lines)
@@ -255,11 +256,9 @@ namespace Match3Test
                         intersection.PlaceBonus(Bonus.Bomb);
                     }
 
-
-
                 }
             }
-            // destroy all intersecting lines and remove them from the list of matches
+            // destroy all intersecting matches and remove them from the list of matches
             foreach (List<Cell> line in toDestroy)
             {
                 foreach (Cell cell in line)
@@ -271,96 +270,48 @@ namespace Match3Test
                 lines.Remove(line);
             }
 
-
-            
-            // Check for lines with 4 cells
+            // Check for matches that generate bonuses marbles
             foreach (List<Cell> line in lines)
             {
+                // define cell for bonus. If match contains marble that was swapped (moved last)
+                // put bonus there, if not, put it in the default position
+
+                Cell placeForBonus;
+                if (line.Contains(wasSpapped1)) placeForBonus = wasSpapped1;
+                else if (line.Contains(wasSpapped2)) placeForBonus = wasSpapped2;
+                else placeForBonus = line[0];
+                AddDestroyer(placeForBonus);
+
+                // Add bonus LINE
                 if (line.Count() == 4)
                 {
-
                     // if horizontal line
                     if (line[0].Row == line[1].Row)
                     {
-                        if (line.Contains(wasSpapped1))
-                        {
-                            AddDestroyer(wasSpapped1);
-                            wasSpapped1.PlaceBonus(Bonus.LineHor);
-                            line.Remove(wasSpapped1);
-                            continue;
-                        }
-                        else if (line.Contains(wasSpapped2))
-                        {
-                            AddDestroyer(wasSpapped2);
-                            wasSpapped2.PlaceBonus(Bonus.LineHor);
-                            line.Remove(wasSpapped2);
-                            continue;
-                        }
-
-                        AddDestroyer(line[0]);
-                        line[0].PlaceBonus(Bonus.LineHor);
-                        line.Remove(line[0]);
+                        placeForBonus.PlaceBonus(Bonus.LineHor);
+                        line.Remove(placeForBonus);
                         continue;
-                    }
 
-                    if (line.Contains(wasSpapped1))
-                    {
-                        AddDestroyer(wasSpapped1);
-                        wasSpapped1.PlaceBonus(Bonus.LineVer);
-                        line.Remove(wasSpapped1);
-                        continue;
                     }
-                    else if (line.Contains(wasSpapped2))
-                    {
-                        AddDestroyer(wasSpapped2);
-                        wasSpapped2.PlaceBonus(Bonus.LineVer);
-                        line.Remove(wasSpapped2);
-                        continue;
-                    }
-                    AddDestroyer(line[0]);
-                    line[0].PlaceBonus(Bonus.LineVer);
-                    line.Remove(line[0]);
-                    
-
+                    // for vertical line
+                    placeForBonus.PlaceBonus(Bonus.LineVer);
+                    line.Remove(placeForBonus);
+                    continue;
                 }
-            }
-
-            // Check for lines with 5 or more cells
-            foreach (List<Cell> line in lines)
-            {
-                if (line.Count() >= 5)
+                // Add bonus BOMB
+                else if (line.Count >= 5)
                 {
-                    // we check 
-                    if (line.Contains(wasSpapped1))
-                    {
-                        AddDestroyer(wasSpapped1);
-                        wasSpapped1.PlaceBonus(Bonus.Bomb);
-                        line.Remove(wasSpapped1);
-                        
-                        continue;
-                    }
-                    else if (line.Contains(wasSpapped2))
-                    {
-                        AddDestroyer(wasSpapped2);
-                        wasSpapped1.PlaceBonus(Bonus.Bomb);
-                        line.Remove(wasSpapped2);
-                        
-                        continue;
-                    }
-
-                    AddDestroyer(line[0]);
-                    line[0].PlaceBonus(Bonus.Bomb);
-                   
-                    line.Remove(line[0]);
-
-
+                    placeForBonus.PlaceBonus(Bonus.Bomb);
+                    line.Remove(placeForBonus);
+                    continue;
                 }
+
             }
 
             wasSpapped1 = null;
             wasSpapped2 = null;
 
-            // Destroy matches
+            // Destroy matches that are left
             foreach (List<Cell> line in lines)
             {
                 foreach (Cell cell in line)
