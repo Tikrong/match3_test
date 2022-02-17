@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Match3Test
-{
+{   // this class is used to show score and time left on the screen
     class Score
     {
         private SpriteBatch spriteBatch;

@@ -64,8 +64,6 @@ namespace Match3Test
             // load gamefont
             scoreFont = Content.Load<SpriteFont>("scoreFont");
 
-
-
         }
 
         protected override void Update(GameTime gameTime)

@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Match3Test
-{
+{   
+    // this class handles destroyers that appear after bonus was destroyed
     class Destroyer
     {
         private Vector2 position;
@@ -42,7 +43,7 @@ namespace Match3Test
             destroyerType = type;
             elapsedTime = 0;
             
-            
+            // eliminate destroyers that appear on the border and go in its direction
             if (destination.X == Column && destination.Y == Row && destroyerType != DestroyerType.Bomb)
             {
                 IsFinished = true;
@@ -50,11 +51,12 @@ namespace Match3Test
 
         }
 
-        // returns true when new cell is reached
+       
         public bool Update(GameTime gameTime)
         {
             switch(destroyerType)
             {
+                // returns true when new cell is reached
                 case (DestroyerType.Fireball):
                     int x = (int)position.X / Constants.cellSize;
                     int y = (int)position.Y / Constants.cellSize;
@@ -67,6 +69,7 @@ namespace Match3Test
                     Column = x;
                     return true;
                 case (DestroyerType.Bomb):
+                    // returns true when detonates
                     elapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
                     if (elapsedTime < 250)
                     {
@@ -91,9 +94,6 @@ namespace Match3Test
                     IsFinished = true;
                     return true;
 
-
-
-
             }
             return false;
             
@@ -109,6 +109,7 @@ namespace Match3Test
             spriteBatch.Draw(texture, position, Color.White);
         }
 
+        // the same as for marbles
         private void MoveToAnimation()
         {
             // Move horizontal

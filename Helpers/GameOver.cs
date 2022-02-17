@@ -38,9 +38,6 @@ namespace Match3Test
             buttonHover = textures[Textures.ButtonQuitHover];
             buttonRect = new Rectangle((Constants.screenWidth - button.Width)/2, gameOverRect.Bottom + 30, button.Width, button.Height);
 
-
-
-
         }
 
         // returns true if button quit is clicked

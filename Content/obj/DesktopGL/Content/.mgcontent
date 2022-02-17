@@ -4,10 +4,6 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/background1.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/background2.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/background3.png</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/background4.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/background5.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/background6.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/blue.png</File>
@@ -26,16 +22,8 @@
     <File>D:/GameDev/monogame/Match3/Match3/Content/quitHover.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/quitNormal.png</File>
     <File>D:/GameDev/monogame/Match3/Match3/Content/scoreFont.spritefont</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/stars.jpg</File>
-    <File>D:/GameDev/monogame/Match3/Match3/Content/walkAnim.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

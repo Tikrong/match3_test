@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Match3Test
-{
+{   // this class is used to play animation from sprite sheet
     public class AnimatedSprite
     {
         public Texture2D Texture { get; set; }

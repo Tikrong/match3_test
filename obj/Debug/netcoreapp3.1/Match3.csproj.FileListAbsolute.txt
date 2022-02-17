@@ -26,11 +26,9 @@ D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\blue.xnb
 D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\green.xnb
 D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\pink.xnb
 D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\red.xnb
-D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\stars.xnb
 D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\yellow.xnb
 D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\scoreFont.xnb
 D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\explosion.xnb
-D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\walkAnim.xnb
 D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\grey.xnb
 D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\orange.xnb
 F:\gamedev\match3_test\bin\Debug\netcoreapp3.1\Content\red.xnb
