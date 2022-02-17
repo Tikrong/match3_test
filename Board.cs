@@ -177,41 +177,33 @@ namespace Match3Test
 
         }
 
+        // this method finds matches and destroys matches that are currently on the board
         public bool FindMatches()
         {
+            // here we store all the matches that were found
             List<List<Cell>> lines = new List<List<Cell>>();
-            // Find Horizontal lines
+            // Find Horizontal matches
             for (int y = 0; y < 8; y++)
             {
+                /* iterate through row from the second marble and add previous to the list
+                if colors are the same, repeat. If colors differ, check whether line 
+                is a match3 or longer and start new list*/
 
                 List<Cell> line = new List<Cell>();
                 for (int x = 1; x < 8; x++)
                 {
+                    line.Add(cells[y, x - 1]);
                     if (cells[y, x].MarbleColor == cells[y, x - 1].MarbleColor)
                     {
-                        line.Add(cells[y, x - 1]);
-                        if (x == 7)
-                        {
-                            line.Add(cells[y, x]);
-                            if (line.Count >= 3)
-                            {
-                                lines.Add(line);
-
-                            }
-                        }
-
+                        if (x==7) line.Add(cells[y, x]);
+                        continue;
                     }
-                    else
-                    {
-                        line.Add(cells[y, x - 1]);
-                        if (line.Count >= 3)
-                        {
-                            lines.Add(line);
+                    if (line.Count() >= 3) lines.Add(line);
+                    line = new List<Cell>();
 
-                        }
-                        line = new List<Cell>();
-                    }
                 }
+                if (line.Count() >= 3) lines.Add(line);
+                
             }
 
             // Find vertical lines
@@ -221,31 +213,17 @@ namespace Match3Test
                 List<Cell> line = new List<Cell>();
                 for (int y = 1; y < 8; y++)
                 {
+                    line.Add(cells[y - 1, x]);
                     if (cells[y, x].MarbleColor == cells[y - 1, x].MarbleColor)
                     {
-                        line.Add(cells[y - 1, x]);
-                        if (y == 7)
-                        {
-                            line.Add(cells[y, x]);
-                            if (line.Count >= 3)
-                            {
-                                lines.Add(line);
-
-                            }
-                        }
-
+                        if (y == 7) line.Add(cells[y, x]);
+                        continue;
                     }
-                    else
-                    {
-                        line.Add(cells[y - 1, x]);
-                        if (line.Count >= 3)
-                        {
-                            lines.Add(line);
-
-                        }
-                        line = new List<Cell>();
-                    }
+                    if (line.Count() >= 3) lines.Add(line);
+                    line = new List<Cell>();
                 }
+                if (line.Count() >= 3) lines.Add(line);
+
             }
 
             // if no mathec return false
@@ -263,10 +241,8 @@ namespace Match3Test
                 foreach (List<Cell> otherLine in lines)
                 {
                     // if the same line go on
-                    if (line == otherLine)
-                    {
-                        continue;
-                    }
+                    if (line == otherLine) continue;
+
                     // get the intersection cell, delete it from lines, mark lines for destruction and go on
                     var tmp = line.Intersect(otherLine);
                     if (tmp.Count() > 0)
@@ -348,6 +324,7 @@ namespace Match3Test
 
                 }
             }
+
             // Check for lines with 5 or more cells
             foreach (List<Cell> line in lines)
             {
@@ -382,8 +359,6 @@ namespace Match3Test
 
             wasSpapped1 = null;
             wasSpapped2 = null;
-
-            
 
             // Destroy matches
             foreach (List<Cell> line in lines)

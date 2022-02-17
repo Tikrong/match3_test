@@ -174,19 +174,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tikrong\\.nuget\\packages\\": {}
+    "C:\\Users\\tikro\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\gamedev\\match3_test\\Match3.csproj",
+      "projectUniqueName": "D:\\GameDev\\monogame\\Match3\\Match3\\Match3.csproj",
       "projectName": "Match3",
-      "projectPath": "F:\\gamedev\\match3_test\\Match3.csproj",
-      "packagesPath": "C:\\Users\\Tikrong\\.nuget\\packages\\",
-      "outputPath": "F:\\gamedev\\match3_test\\obj\\",
+      "projectPath": "D:\\GameDev\\monogame\\Match3\\Match3\\Match3.csproj",
+      "packagesPath": "C:\\Users\\tikro\\.nuget\\packages\\",
+      "outputPath": "D:\\GameDev\\monogame\\Match3\\Match3\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Tikrong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\tikro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -236,7 +241,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
       }
     }
   }

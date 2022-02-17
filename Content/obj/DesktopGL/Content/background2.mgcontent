@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>F:/gamedev/match3_test/Content/background2.png</SourceFile>
-  <SourceTime>2022-02-17T22:21:05.6508051+10:00</SourceTime>
-  <DestFile>F:/gamedev/match3_test/Content/bin/DesktopGL/Content/background2.xnb</DestFile>
-  <DestTime>2022-02-17T22:32:07.2808086+10:00</DestTime>
+  <SourceFile>D:/GameDev/monogame/Match3/Match3/Content/background2.png</SourceFile>
+  <SourceTime>2022-02-18T02:15:11.5527659+10:00</SourceTime>
+  <DestFile>D:/GameDev/monogame/Match3/Match3/Content/bin/DesktopGL/Content/background2.xnb</DestFile>
+  <DestTime>2022-02-18T02:15:29.0339939+10:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-11T02:17:54+10:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

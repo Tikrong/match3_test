@@ -1,8 +1,9 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Tikrong\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Tikrong\\.nuget\\packages"
+      "C:\\Users\\tikro\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\tikro\\.nuget\\packages",
+      "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ]
   }
 }

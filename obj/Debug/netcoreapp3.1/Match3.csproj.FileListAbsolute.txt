@@ -87,3 +87,14 @@ F:\gamedev\match3_test\bin\Debug\netcoreapp3.1\Content\playHover.xnb
 F:\gamedev\match3_test\bin\Debug\netcoreapp3.1\Content\playNeutral.xnb
 F:\gamedev\match3_test\bin\Debug\netcoreapp3.1\Content\quitHover.xnb
 F:\gamedev\match3_test\bin\Debug\netcoreapp3.1\Content\quitNormal.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\background1.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\background2.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\background3.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\background4.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\background5.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\background6.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\gameOver.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\playHover.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\playNeutral.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\quitHover.xnb
+D:\GameDev\monogame\Match3\Match3\bin\Debug\netcoreapp3.1\Content\quitNormal.xnb

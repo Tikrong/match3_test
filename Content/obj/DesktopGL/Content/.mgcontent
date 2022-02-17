@@ -4,30 +4,30 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>F:/gamedev/match3_test/Content/background1.png</File>
-    <File>F:/gamedev/match3_test/Content/background2.png</File>
-    <File>F:/gamedev/match3_test/Content/background3.png</File>
-    <File>F:/gamedev/match3_test/Content/background4.png</File>
-    <File>F:/gamedev/match3_test/Content/background5.png</File>
-    <File>F:/gamedev/match3_test/Content/background6.png</File>
-    <File>F:/gamedev/match3_test/Content/blue.png</File>
-    <File>F:/gamedev/match3_test/Content/bomb.png</File>
-    <File>F:/gamedev/match3_test/Content/destroyer.png</File>
-    <File>F:/gamedev/match3_test/Content/explosion.png</File>
-    <File>F:/gamedev/match3_test/Content/gameOver.png</File>
-    <File>F:/gamedev/match3_test/Content/green.png</File>
-    <File>F:/gamedev/match3_test/Content/grey.png</File>
-    <File>F:/gamedev/match3_test/Content/line_hor.png</File>
-    <File>F:/gamedev/match3_test/Content/line_ver.png</File>
-    <File>F:/gamedev/match3_test/Content/orange.png</File>
-    <File>F:/gamedev/match3_test/Content/pink.png</File>
-    <File>F:/gamedev/match3_test/Content/playHover.png</File>
-    <File>F:/gamedev/match3_test/Content/playNeutral.png</File>
-    <File>F:/gamedev/match3_test/Content/quitHover.png</File>
-    <File>F:/gamedev/match3_test/Content/quitNormal.png</File>
-    <File>F:/gamedev/match3_test/Content/scoreFont.spritefont</File>
-    <File>F:/gamedev/match3_test/Content/stars.jpg</File>
-    <File>F:/gamedev/match3_test/Content/walkAnim.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/background1.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/background2.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/background3.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/background4.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/background5.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/background6.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/blue.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/bomb.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/destroyer.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/explosion.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/gameOver.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/green.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/grey.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/line_hor.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/line_ver.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/orange.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/pink.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/playHover.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/playNeutral.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/quitHover.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/quitNormal.png</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/scoreFont.spritefont</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/stars.jpg</File>
+    <File>D:/GameDev/monogame/Match3/Match3/Content/walkAnim.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
