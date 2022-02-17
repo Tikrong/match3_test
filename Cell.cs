@@ -38,7 +38,7 @@ namespace Match3Test
             this.texture = texture;
             this.explosion = new AnimatedSprite(explosion, 2, 4);
             position = new Vector2(column * Constants.cellSize, row * Constants.cellSize);
-            movementSpeed = 10f;
+            movementSpeed = Constants.MarbleMovementSpeed;
             state = CellState.FadeIn;
             bonus = Bonus.None;
             this.textures = textures;
@@ -163,6 +163,11 @@ namespace Match3Test
         public bool isEmpty()
         {
             return state == CellState.Empty;
+        }
+
+        public void MakeEmpty()
+        {
+            state = CellState.Empty;
         }
 
         // moving the cell to new given position

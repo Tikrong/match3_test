@@ -10,5 +10,8 @@ namespace Match3Test
         public const int screenHeight = 576;
         public const int cellSize = 64;
         public const float gameDuration = 61f;
+        public const float MarbleMovementSpeed = 10f;
+        public const float DestroyerMovementSpeed = 25f;
+
     }
 }

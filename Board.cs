@@ -325,68 +325,40 @@ namespace Match3Test
         }
 
         // Iterates through the board, finds empty spaces and drops the marbles from above to that places
-        public bool DropMarbles()
+        public void DropMarbles()
         {
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 7; y > 0; y--)
                 {
-                    if (cells[y, x] == null)
-                    {
-                        // if cell is empty find closest cell in the top and drop it to this empty cell
-                        for (int i = y - 1; i >= 0; i--)
-                        {
-                            if (cells[i, x] == null)
-                            {
-                                continue;
-                            }
-
-                            // if next cell on the top go higher
-                            if (cells[i, x].isEmpty())
-                            {
-                                continue;
-                            }
-                            cells[i, x].DropTo(y);
-                            //Cell tmpCell = cells[y, x];
-                            cells[y, x] = cells[i, x];
-                            cells[i, x] = null;
-                            break;
-
-                        }
-                    }
+                    
                     // if cell with marble continue loop
-                    else if (!cells[y, x].isEmpty())
+                    if (!cells[y, x].isEmpty())
                     {
                         continue;
                     }
 
-                    else
+                    // if cell is empty find closest cell in the top and drop it to this empty cell
+                    for (int i = y - 1; i >= 0; i--)
                     {
-                        // if cell is empty find closest cell in the top and drop it to this empty cell
-                        for (int i = y - 1; i >= 0; i--)
+ 
+                        // if next cell on the top go higher
+                        if (cells[i, x].isEmpty())
                         {
-                            if (cells[i, x] == null)
-                            {
-                                continue;
-                            }
-
-                            // if next cell on the top go higher
-                            if (cells[i, x].isEmpty())
-                            {
-                                continue;
-                            }
-                            cells[i, x].DropTo(y);
-                            //Cell tmpCell = cells[y, x];
-                            cells[y, x] = cells[i, x];
-                            cells[i, x] = null;
-                            break;
-
+                            continue;
                         }
+
+                        Cell tmpCell = cells[y, x];
+                        cells[i, x].DropTo(y);
+                        cells[y, x] = cells[i, x];
+                        cells[i, x] = tmpCell;
+                        break;
+ 
                     }
 
                 }
             }
-            return false;
+            
         }
 
         // iterate over every cell in the array and spawn marbles when the cells are empty
@@ -396,19 +368,11 @@ namespace Match3Test
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    if (cells[y, x] == null)
-                    {
-                        MarbleColor color = (MarbleColor)random.Next(0, 5);
-                        Cell cell = new Cell(spriteBatch, color, y, x, textures[(Textures)color], textures[Textures.Explosion], textures);
-                        cells[y, x] = cell;
-                        continue;
-                    }
                     if (cells[y, x].isEmpty())
                     {
                         MarbleColor color = (MarbleColor)random.Next(0, 5);
                         Cell cell = new Cell(spriteBatch, color, y, x, textures[(Textures)color], textures[Textures.Explosion], textures);
                         cells[y, x] = cell;
-
                     }
                 }
             }
@@ -417,34 +381,23 @@ namespace Match3Test
         // Adds destroyers to the board
         public void AddDestroyer(Cell cell)
         {
-            // check what type of destroyers we are adding
-            // Add destroyers for horizontal line
-            Destroyer destroyer1;
-            Destroyer destroyer2;
+            // check what type of destroyers we are adding and add
 
             switch (cell.bonus)
             {
                 
                 case (Bonus.LineHor):
-                    // this one flies to the left
-                    destroyer1 = new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(0, cell.Row), DestroyerType.Fireball);
-                    // this one flies to the right
-                    destroyer2 = new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(7, cell.Row), DestroyerType.Fireball);
-
-                    destroyers.Add(destroyer1);
-                    destroyers.Add(destroyer2);
+                    // one flies to the left and other to the right
+                    destroyers.Add(new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(0, cell.Row), DestroyerType.Fireball));
+                    destroyers.Add(new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(7, cell.Row), DestroyerType.Fireball));
                     break;
                 case (Bonus.LineVer):
-                    destroyer1 = new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(cell.Column, 0), DestroyerType.Fireball);
-                    // this one flies to the right
-                    destroyer2 = new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(cell.Column, 7), DestroyerType.Fireball);
+                    destroyers.Add(new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(cell.Column, 0), DestroyerType.Fireball));
+                    destroyers.Add(new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(cell.Column, 7), DestroyerType.Fireball));
 
-                    destroyers.Add(destroyer1);
-                    destroyers.Add(destroyer2);
                     break;
                 case (Bonus.Bomb):
-                    destroyer1 = new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(cell.Column, 0), DestroyerType.Bomb);
-                    destroyers.Add(destroyer1);
+                    destroyers.Add(new Destroyer(spriteBatch, cell.Row, cell.Column, textures, new Vector2(cell.Column, 0), DestroyerType.Bomb));
                     break;
             }
             
