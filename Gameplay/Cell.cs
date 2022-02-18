@@ -176,7 +176,7 @@ namespace Match3Test
         public bool MoveTo(int destinationRow, int destinationColumn)
         {
             //1. calculate and save destination for movement
-            destination = new Vector2(destinationColumn * Constants.cellSize, destinationRow * Constants.cellSize);
+            destination = new Vector2(destinationColumn, destinationRow);
             //2. calculate movement vector
             movementVector = new Vector2(destinationColumn - Column, destinationRow - Row);
             //3. change state for movement
@@ -190,72 +190,26 @@ namespace Match3Test
 
         private void MoveToAnimation()
         {
-            // Move horizontal
-            if (movementVector.Y == 0)
+            /* move by modifying position using movement vector, when destination reached
+             change state for neutral*/
+            position += movementVector * Constants.MarbleMovementSpeed;
+            
+            if ((int)(position.X + Constants.cellSize / 2) / Constants.cellSize == destination.X 
+                && (int)(position.Y + Constants.cellSize / 2)  / Constants.cellSize == destination.Y)
+ 
             {
-                // Move right
-                if (movementVector.X > 0)
-                {
-                    position = new Vector2(position.X + movementSpeed, position.Y);
-                    // if destination reached
-                    if (position.X >= destination.X)
-                    {
-                        position.X = destination.X;
-                        state = CellState.Neutral;
-                        return;
-                    }
-                }
-                // Move left
-                else if (movementVector.X < 0)
-                {
-                    position = new Vector2(position.X - movementSpeed, position.Y);
-                    // if destination reached
-                    if (position.X <= destination.X)
-                    {
-                        position.X = destination.X;
-                        state = CellState.Neutral;
-                        return;
-                    }
-                }
+                position.X = destination.X * Constants.cellSize;
+                position.Y = destination.Y * Constants.cellSize;
+                state = CellState.Neutral;
+                return;
             }
-
-            // Move vertically
-            else
-            {
-                // move up
-                if (movementVector.Y < 0)
-                {
-                    position = new Vector2(position.X, position.Y - movementSpeed);
-                    // if destination reached
-                    if (position.Y <= destination.Y)
-                    {
-                        position.Y = destination.Y;
-                        state = CellState.Neutral;
-                        return;
-                    }
-                }
-
-                // move down
-                else if (movementVector.Y > 0)
-                {
-                    position = new Vector2(position.X, position.Y + movementSpeed);
-                    // if destination reached
-                    if (position.Y >= destination.Y)
-                    {
-                        position.Y = destination.Y;
-                        state = CellState.Neutral;
-                        return;
-                    }
-                }
-            }
-
         }
 
         // drops the cell into given location
         public void DropTo(int row)
         {
             //1. calculate and save destination for movement
-            destination = new Vector2(Column * Constants.cellSize, row * Constants.cellSize);
+            destination = new Vector2(Column, row);
             //2. calculate movement vector
             movementVector = new Vector2(0, row - Row);
             //3. change state for movement
@@ -293,16 +247,6 @@ namespace Match3Test
 
         public override bool Equals(object obj) => Equals(obj as Cell);
         public override int GetHashCode() => (Row, Column).GetHashCode();
-
-
-
-
-
-
-
-
-
-
 
     }
 }
